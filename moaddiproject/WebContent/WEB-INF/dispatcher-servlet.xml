@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+	</bean>
+	
+	     <!-- add hibernate using hibernatetemplate -->
+	     
+	     
+	<bean id="ht" class="org.springframework.orm.hibernate3.HibernateTemplate">
+	  <!-- add the sessionfactory object to hibernate template -->
+	   <property name="sessionFactory">
+	    <ref bean="sessionFactory"/>
+	   </property>
+	</bean>
+	
+	            <!-- dao -->
+	            
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	<bean id="machineDAO" class="com.cis.dao.impl.MachineDAOImpl">
+	  <!-- userdaoimpl contain colnstructorarg and assaining the hibernate template so we configure this place -->
+	<constructor-arg>
+	<ref bean="ht"/>
+	</constructor-arg>
+	</bean>
+	
+	<bean id="lockDAO" class="com.cis.dao.impl.LockDAOImpl">
+	  <!-- userdaoimpl contain colnstructorarg and assaining the hibernate template so we configure this place -->
+	<constructor-arg>
+	<ref bean="ht"/>
+	</constructor-arg>
+	</bean>
+		
+	<bean class="com.cis.dao.impl.SupplierDAOImpl" id="supplierDAO"  >
+	<constructor-arg>
+	<ref bean="ht"/>
+    </constructor-arg>
+	</bean>
+		  
+	<bean class="com.cis.dao.impl.AgencyDAOImpl"  id="agencyDAO">
+	<constructor-arg>
+	<ref bean="ht"/>
+    </constructor-arg>
+	</bean>
+	
+	<bean class="com.cis.dao.impl.SupplierPageDAOImpl"  id="supplierPageDAO">
+	<constructor-arg>
+	<ref bean="ht"/>
+    </constructor-arg>
+	</bean>
+	
+	<bean class="com.cis.dao.impl.ItemDAOImpl"  id="itemDAO">
+	<constructor-arg>
+	<ref bean="ht"/>
+    </constructor-arg>
+	</bean>
+	
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	<bean id="machineService" class="com.cis.service.impl.MachineSeviceImpl">
+	  <!-- userdaoimpl contain colnstructorarg and assaining the hibernate template so we configure this place -->
+		<constructor-arg>
+			<ref bean="machineDAO"/>
+		</constructor-arg>
+	</bean>
+	
+		<bean id="lockService" class="com.cis.service.impl.LockServiceImp">
+		<constructor-arg>
+			<ref bean="lockDAO"/>
+		</constructor-arg>
+	</bean>
+	<bean id="supplierService" class="com.cis.service.impl.SupplierServiceImpl">
+		<constructor-arg>
+			<ref bean="supplierDAO"/>
+		</constructor-arg>
+	</bean>
+	<bean id="supplierPageService" class="com.cis.service.impl.SupplierPageServiceImpl">
+		<constructor-arg>
+			<ref bean="supplierPageDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="agencyService" class="com.cis.service.impl.AgencyServiceImp">
+		<constructor-arg>
+			<ref bean="agencyDAO"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="itemService" class="com.cis.service.impl.ItemServiceImpl">
+		<constructor-arg>
+			<ref bean="itemDAO"/>
+		</constructor-arg>
+	</bean>
+		
+		      <!-- viewResolver -->
+		
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+		
+	</bean>
+	<!--  for tiles  -->
+	
+	
+	
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				
+				
+				
+				<!-- ************************* moaddi projects******************************************* -->
+			<prop key="/addmachine.htm">
+				addMachineFormController
+				</prop>
+					<prop key="/machineslist.htm">
+				machineListController
+				</prop>
+				
+				<prop key="/delmachine.htm">
+				deleteMachineController
+				</prop>
+				
+				<prop key="/editmachine.htm">
+				editMachineFormController
+				</prop>
+				
+			
+			
+			<prop key="/insertlock.htm">
+				addLockFormController
+				</prop>
+					<prop key="/locklist.htm">
+				lockListController
+				</prop>
+				
+				<prop key="/dellock.htm">
+				deleteLockController
+				</prop>
+				
+				 <prop key="/editlock.htm">
+				editLockFormController
+				</prop> 
+			  <prop key="/downloadPDF.htm">
+				lockPDFController
+				</prop>  
+				
+				<!-- Agency Control  -->
+	
+	       <prop key="/insertagency.htm">
+				addAgencyFormController
+				</prop>
+					<prop key="/agencyeslist.htm">
+				agencyListController
+				</prop>
+				 <prop key="/editagency.htm">
+				editAgencyFormController
+				</prop> 
+				<prop key="/view.htm">
+				agencyViewController
+				</prop>
+				<prop key="/delagency.htm">
+				deleteAgencyController
+				</prop>
+				<!-- Supplier Control -->
+				
+				<prop key="/insertsupplier.htm">
+				addSupplierForm
+				</prop>
+					<prop key="/supplierlist.htm">
+				supplierListController
+				</prop>
+				<prop key="/supplierpage.htm">
+				supplierPageFormController
+				</prop>
+				<prop key="/viewsupplier.htm">
+				supplierViewController
+				</prop>
+				 <prop key="/editsupplier.htm">
+				editSupplierFormController
+				</prop> 
+				<prop key="/delsupplier.htm">
+				deleteSupplierController
+				</prop>
+				<prop key="/supplierlock.htm">
+				supplierLockListController
+				</prop>
+				<prop key="/supplierhistorylist.htm">
+				supplierHistoryListController
+				</prop>
+				
+				
+				
+				<!-- Item                 -->
+				<prop key="/insertitem.htm">
+				addItemForm
+				</prop>
+				<prop key="/itemlist.htm">
+				itemListController
+				</prop>
+				<prop key="/view.htm">
+			    itemViewController
+				</prop>
+				<prop key="/edititem.htm">
+				editItemFormController
+				</prop> 
+				<prop key="/delitem.htm">
+				deleteItemController
+				</prop>
+			<!--  Customer  -->
+			<prop key="/customerlock.htm">
+				customerLockListController
+				</prop>
+			<prop key="/customerpage.htm">
+				customerBuyPageFormController
+				</prop>
+			
+			
+			
+			 </props>
+			 
+		</property>
+	</bean>
+	
+	
+	     
+	
+	<!-- ************************* moaddi projects******************************************* -->
+	
+	<bean class="com.cis.ui.controllers.AddMachineFormController" id="addMachineFormController">
+		<property name="formView">
+			<value>insertmachine</value>
+		</property>
+		<property name="commandName">
+			<value>addMachine</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.MachineForm</value>
+		</property>
+		<!-- <property name="validator">
+			<ref bean="employeeValidator"/>
+		</property> -->
+		<property name="machineService"><ref bean="machineService"/></property>
+	</bean>
+	<bean class="com.cis.ui.controllers.DeleteMachineController" id="deleteMachineController">
+		<property name="machineDAO">
+			<ref bean="machineDAO"/>
+		</property>
+	</bean>
+	
+	<bean class="com.cis.ui.controllers.EditMachineFormController" id="editMachineFormController">
+		<property name="formView">
+			<value>editmachine</value>
+		</property>
+		<property name="commandName">
+			<value>editMachine</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.MachineForm</value>
+		</property>
+		
+		<property name="machineService">
+			<ref bean="machineService"/>
+		</property>
+	</bean>
+	<!-- Agency Controller -->
+	
+	<bean class="com.cis.ui.controller.agency.AddAgencyFormController" id="addAgencyFormController">
+		<property name="formView">
+			<value>WEB-INF/agency/insertagency</value>
+		</property>
+		<property name="commandName">
+			<value>addAgency</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controller.agency.AgencyForm</value>
+		</property>
+		<!-- <property name="validator">
+			<ref bean="employeeValidator"/>
+		</property> -->
+		<property name="agencyService"><ref bean="agencyService"/></property>
+	</bean>
+	 <bean class="com.cis.ui.controller.agency.EditAgencyFormController" id="editAgencyFormController">
+		<property name="formView">
+			<value>WEB-INF/agency/editagency</value>
+		</property>
+		<property name="commandName">
+			<value>editagency</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controller.agency.AgencyForm</value>
+		</property>
+		<property name="agencyService"><ref bean="agencyService"/></property>
+	</bean> 
+	 	<bean class="com.cis.ui.controller.agency.AgencyViewController" id="agencyViewController">
+		
+		<property name="agencyService">
+			<ref bean="agencyService"/>
+		</property>
+	</bean>
+	<bean class="com.cis.ui.controller.agency.DeleteAgencyController" id="deleteAgencyController">
+		<property name="agencyDAO">
+			<ref bean="agencyDAO"/>
+		</property>
+	</bean>
+	
+	<!-- lock controller -->
+	
+	<bean class="com.cis.ui.controllers.AddLockFormController" id="addLockFormController">
+		<property name="formView">
+			<value>insertlock</value>
+		</property>
+		<property name="commandName">
+			<value>addLock</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.LockForm</value>
+		</property>
+		<property name="lockService"><ref bean="lockService"/></property>
+	</bean>
+	
+	
+	<bean class="com.cis.ui.controllers.DeleteLockController" id="deleteLockController">
+		<property name="lockDAO">
+			<ref bean="lockDAO"/>
+		</property>
+	</bean>
+		 <bean class="com.cis.ui.controllers.EditLockFormController" id="editLockFormController">
+		<property name="formView">
+			<value>editlock</value>
+		</property>
+		<property name="commandName">
+			<value>editLock</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.LockForm</value>
+		</property>
+		<constructor-arg><ref bean="lockService"></ref></constructor-arg>
+	</bean> 
+	<!--                 Supplier Controls                      -->
+		<bean class="com.cis.ui.controllers.supplier.AddSupplierFormController" id="addSupplierForm">
+		<property name="formView">
+			<value>WEB-INF/Supplier/insertsupplier</value>
+		</property>
+		<property name="commandName">
+			<value>addSupplier</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.supplier.SupplierForm</value>
+		</property>
+		<!-- <property name="validator">
+			<ref bean="employeeValidator"/>
+		</property> -->
+		<property name="supplierService"><ref bean="supplierService"/></property>
+	</bean>
+	
+	 <bean class="com.cis.ui.controllers.supplier.EditSupplierFormController" id="editSupplierFormController">
+		<property name="formView">
+			<value>WEB-INF/Supplier/editsupplier</value>
+		</property>
+		<property name="commandName">
+			<value>editSupplier</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.supplier.SupplierForm</value>
+		</property>
+		<property name="supplierService"><ref bean="supplierService"/></property>
+	</bean> 
+	
+	<bean class="com.cis.ui.controllers.supplier.SupplierPageFormController" id="supplierPageFormController">
+		<property name="formView">
+			<value>WEB-INF/Supplier/supplierpage</value>
+		</property>
+		<property name="commandName">
+			<value>supplierPage</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.supplier.SupplierPageForm</value>
+		</property>
+		<property name="supplierPageService"><ref bean="supplierPageService"/></property>
+	</bean> 
+	
+	<bean class="com.cis.ui.controllers.supplier.SupplierViewController" id="supplierViewController">
+		
+		<property name="supplierService">
+			<ref bean="supplierService"/>
+		</property>
+	</bean>
+	<bean class="com.cis.ui.controllers.supplier.DeleteSupplierController" id="deleteSupplierController">
+		<property name="supplierDAO">
+			<ref bean="supplierDAO"/>
+		</property>
+	</bean>
+	
+	<!--   Item                                -->
+    	<bean class="com.cis.ui.controllers.item.AddItemFormController" id="addItemForm">
+		<property name="formView">
+			<value>WEB-INF/Items/insertitem</value>
+		</property>
+		<property name="commandName">
+			<value>addItem</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.item.ItemForm</value>
+		</property>
+		<!-- <property name="validator">
+			<ref bean="employeeValidator"/>
+		</property> -->
+		<property name="itemService"><ref bean="itemService"/></property>
+	</bean>
+	
+	<bean class="com.cis.ui.controllers.item.EditItemFormController" id="editItemFormController">
+		<property name="formView">
+			<value>WEB-INF/Items/edititem</value>
+		</property>
+		<property name="commandName">
+			<value>edititem</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.item.ItemForm</value>
+		</property>
+		<property name="itemService"><ref bean="itemService"/></property>
+	</bean> 
+	
+	<bean class="com.cis.ui.controllers.item.ItemViewController" id="itemViewController">
+		
+		<property name="itemService">
+			<ref bean="itemService"/>
+		</property>
+	</bean>
+	<bean class="com.cis.ui.controllers.item.DeleteItemController" id="deleteItemController">
+		<property name="itemDAO">
+			<ref bean="itemDAO"/>
+		</property>
+	</bean>
+	
+	<!-- list data -->
+	<bean class="com.cis.ui.controllers.MachineListController" id="machineListController">
+		<property name="machineService">
+			<ref bean="machineService"/>
+		</property>
+	</bean>
+	
+	<!-- list data for lock -->
+	
+	<bean class="com.cis.ui.controllers.LockListController" id="lockListController">
+		 <property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+	</bean>
+	<!-- list data for Supplier -->
+
+<bean class="com.cis.ui.controllers.supplier.SupplierListController" id="supplierListController">
+		 <property name="supplierService">
+			<ref bean="supplierService"/>
+		</property>
+		 <property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+	</bean>
+   <!-- list data for Agency -->
+
+<bean class="com.cis.ui.controller.agency.AgencyListController" id="agencyListController">
+		 <property name="agencyService">
+			<ref bean="agencyService"/>
+		</property>
+	</bean>
+   
+	<bean class="com.cis.ui.controllers.supplier.locks.SupplierLockListController" id="supplierLockListController">
+		<property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+	</bean>
+	
+	<!-- List For Item  -->
+	
+	<bean class="com.cis.ui.controllers.item.ItemListController" id="itemListController">
+		 <property name="itemService">
+			<ref bean="itemService"/>
+		</property>
+			</bean>
+	<!-- list for custmer  -->
+	<bean class="com.cis.ui.controllers.customer.CustomerLockListController" id="customerLockListController">
+		<property name="lockService">
+			<ref bean="lockService"/>
+		</property>
+	</bean>
+	
+	 <bean class="com.cis.ui.controllers.customer.CustomerBuyPageFormController" id="customerBuyPageFormController">
+		<property name="formView">
+			<value>WEB-INF/customer/customerproductlist</value>
+		</property>
+		<property name="commandName">
+			<value>customerPage</value>
+		</property>
+		<property name="commandClass">
+			<value>com.cis.ui.controllers.supplier.SupplierPageForm</value>
+		</property>
+		<property name="supplierPageService"><ref bean="supplierPageService"/></property>
+	</bean> 
+	
+	
+	<bean class="com.cis.ui.controllers.supplier.SupplierHistoryListController" id="supplierHistoryListController">
+		<property name="supplierPageService">
+			<ref bean="supplierPageService"/>
+		</property>
+	</bean>
+	<!-- for PDf -->
+	
+	<bean 
+  class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+ 
+    <bean class="com.cis.ui.controllers.LockPDFController" id="lockPDFController" />
+ 
+ 
+    <bean id="PDFView"
+   	class=" com.cis.ui.controllers.PDFView">
+   </bean>
+ 
+</beans>

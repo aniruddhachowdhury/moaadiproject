@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cis.dao.model.Item"  table="Item">
+         <id name="itemNo" type="java.lang.Integer">
+            <column name="itemNo" />
+             <generator class="increment" /> 
+        </id> 
+        <property name="itemId" type="java.lang.String">
+            <column name="itemId" />
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="type" />
+        </property>
+         <property name="productName" type="java.lang.String">
+            <column name="productName" />
+        </property>
+         <property name="productSpec" type="java.lang.String">
+            <column name="productSpec" />
+        </property>
+    </class>
+</hibernate-mapping>

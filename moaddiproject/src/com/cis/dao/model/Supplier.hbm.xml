@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cis.dao.model.Supplier"  table="Supplier">
+         <id name="supplier_No" type="java.lang.Integer">
+            <column name="supplier_No" />
+             <generator class="increment" /> 
+        </id> 
+        <property name="supplier_ID" type="java.lang.String">
+            <column name="supplier_ID" />
+        </property>
+       <property name="supplier_Name" type="java.lang.String">
+            <column name="supplier_Name" />
+        </property>
+       <property name="supplier_email" type="java.lang.String">
+            <column name="supplier_email" />
+        </property>
+        <property name="region" type="java.lang.String">
+            <column name="region" />
+               </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cis.dao.model.Machine"  table="MACHINE">
+         <id name="machineNo" type="java.lang.Integer">
+            <column name="machineNo" />
+            <generator class="increment" />
+        </id> 
+        <property name="machineId" type="java.lang.String">
+            <column name="machineId" />
+        </property>
+        <!-- <property name="MachineNo" type="java.lang.String">
+            <column name="MachineNo" length="10" />
+        </property>
+        <property name="empAddr" type="java.lang.String">
+            <column name="empAddr" length="20" />
+        </property> -->
+    </class>
+</hibernate-mapping>

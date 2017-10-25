@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.cis.dao.model.Agency"  table="agency">
+         <id name="agency_No" type="java.lang.Integer">
+            <column name="agency_No" />
+             <generator class="increment" /> 
+        </id> 
+        <property name="agencyId" type="java.lang.String">
+            <column name="agencyId" />
+        </property>
+        
+       <property name="region" type="java.lang.String">
+            <column name="region" />
+        </property>
+         <property name="date" type="java.lang.String">
+            <column name="date" />
+        </property>
+         <property name="password" type="java.lang.String">
+            <column name="password" />
+        </property>
+         <property name="email" type="java.lang.String">
+            <column name="email" />
+        </property>
+    </class>
+</hibernate-mapping>
